@@ -465,7 +465,7 @@ function finale(kind,isSim){
   $("fxb").innerHTML=o?`<div class="fxbig">🎉 เปิดโหวตแล้ว!</div><div class="fxs">เลือกแบบเสื้อที่ใช่ แล้วกดโหวตได้เลย</div><button class="fxgo" id="fxgo">ไปโหวตเลย →</button>`:`<div class="fxbig">🏁 ปิดโหวตแล้ว!</div><div class="fxs">ขอบคุณทุกคนที่ร่วมโหวต · กำลังประกาศผู้ชนะ…</div>`;
   confetti(170,"burst");confetti(70,"pop");
   if(o){$("fxgo").onclick=()=>{fxClose();if(!isSim)$("sec-v").scrollIntoView({behavior:"smooth"})};fxT=setTimeout(fxClose,14000)}
-  else{winSeen=true;try{sessionStorage.setItem("hv_win","1")}catch(e){}fxT=setTimeout(()=>showWinner(isSim),3800)}
+  else{winSeen=true;try{sessionStorage.setItem("hv_win","1")}catch(e){}let tr=0;const wt=()=>{if(isSim||!db||unlocked||SNAP||cFinal||++tr>16)showWinner(isSim);else fxT=setTimeout(wt,500)};fxT=setTimeout(wt,3800)}
   if(!isSim)render()}
 function simRun(kind){clearInterval(sim);fxDis=null;let s=10;showCount(kind,s);sim=setInterval(()=>{s--;if(s>=1)showCount(kind,s);else{clearInterval(sim);sim=null;finale(kind,true)}},1000)}
 function totals(){const s=sCnt(),t=tCnt(),ac={};GEMS.forEach(g=>ac[g.id]=s[g.id]+t[g.id]);return ac}
