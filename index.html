@@ -364,7 +364,7 @@ let PCS=null,PCT=null,cNext=0,cBusy=false,cFinal=false,cFail=0,cBack=0,rVis=fals
 const ZERO=()=>Object.fromEntries(GEMS.map(g=>[g.id,0]));
 const sCnt=()=>(unlocked||!db||SNAP)?countBy(votes):(PCS||ZERO());
 const tCnt=()=>(unlocked||!db||SNAP)?countBy(tv):(PCT||ZERO());
-const cInt=()=>{const n=(PCS?sum(PCS):0)+(PCT?sum(PCT):0);return n<100?10000:n<300?30000:60000};
+const cInt=()=>{const n=(PCS?sum(PCS):0)+(PCT?sum(PCT):0);return n<25?10000:n<100?20000:n<300?45000:90000};
 async function cnt1(tok,col,gem){
   const r=await fetch("https://firestore.googleapis.com/v1/projects/"+FBCFG.projectId+"/databases/(default)/documents:runAggregationQuery",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+tok},body:JSON.stringify({structuredAggregationQuery:{structuredQuery:{from:[{collectionId:col}],where:{fieldFilter:{field:{fieldPath:"gem"},op:"EQUAL",value:{stringValue:gem}}}},aggregations:[{alias:"n",count:{}}]}})});
   if(!r.ok){const e=new Error("HTTP "+r.status);e.status=r.status;throw e}
